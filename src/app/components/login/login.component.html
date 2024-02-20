@@ -1,1 +1,57 @@
-<p>login works!</p>
+<div class="center-container">
+  <div class="centered-div">
+    <form [formGroup]="loginForm" class="custom-card">
+      <p-card header="Login">
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            pInputText
+            formControlName="email"
+            class="w-full"
+            id="email"
+            name="email"
+            placeholder="Type your email"
+          />
+          <small
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="block p-error"
+          >
+            <div *ngIf="email.errors?.['required']">Email is required.</div>
+            <div *ngIf="email.errors?.['email']">Email should be valid</div>
+          </small>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            pInputText
+            formControlName="password"
+            class="w-full"
+            id="password"
+            name="password"
+            placeholder="Type your password"
+          />
+          <small
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="block p-error"
+          >
+            <div *ngIf="password.errors?.['required']">
+              Password is required.
+            </div>
+          </small>
+        </div>
+        <p-button
+          label="SIGN IN"
+          styleClass="w-full"
+          class="custom-button"
+          [disabled]="loginForm.invalid"
+          type="submit"
+        ></p-button>
+        <div class="footer">
+          Not a member? <a routerLink="/register">Register</a>
+        </div>
+      </p-card>
+    </form>
+  </div>
+</div>

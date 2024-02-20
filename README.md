@@ -1,27 +1,28 @@
-# TechnicalHomework
+I was having a hard time installing Angular CLI and I did the following tweaks since I was using a Macbook:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
+Here are the steps I made:
 
-## Development server
+1. installing the package:
+   sudo npm install -g @angular/cli
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2. change the ownership of the npm directories to mine:
+   sudo chown -R $(whoami) ~/.npm
+   sudo chown -R $(whoami) /usr/local/lib/node_modules
 
-## Code scaffolding
+3. changing npm global directory:
+   mkdir ~/.npm-global
+   npm config set prefix '~/.npm-global'
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+4. opening the file ~/.zshrc:
+   nano ~/.zshrc
 
-## Build
+5. edit the content:export PATH=~/.npm-global/bin:$PATH
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+6. then install the Angular CLI:
+   npm install -g @angular/cli
 
-## Running unit tests
+Create the folder:
+Here are the commands I have used:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. ng new technical-assessment ng new my-app --no-standalone --routing --ssr=false (i used this because i am not familiar with a standalone project and i need modules)
+2. pushed the folder and readme files in Github

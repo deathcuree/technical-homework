@@ -1,6 +1,6 @@
 <div class="center-container">
   <div class="centered-div">
-    <form [formGroup]="loginForm" class="custom-card">
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="custom-card">
       <p-card header="Login">
         <div class="field">
           <label for="email">Email</label>

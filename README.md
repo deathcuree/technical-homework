@@ -62,3 +62,5 @@ Creating the signup form.
 
 Creating the login function
 Give security to the website
+
+This is the link for the Figma design: https://www.figma.com/file/qhX0t2sGHmDO58yoLnYO5E/Assessment?type=design&node-id=1-3&mode=design&t=jv96LvDM0aTXiWJD-0

@@ -18,4 +18,9 @@ export class AuthService {
   getUserByEmail(email: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/users?email=${email}`);
   }
+
+  checkEmailExists(email: string): Observable<boolean> {
+    const url = `${this.baseUrl}/check-email-exists`;
+    return this.http.post<boolean>(url, { email });
+  }
 }

@@ -15,7 +15,14 @@ export class RegisterComponent {
   registerForm = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
+        ],
+      ],
       confirmPassword: ['', Validators.required],
     },
     {
@@ -42,9 +49,44 @@ export class RegisterComponent {
     return this.registerForm.controls['confirmPassword'];
   }
 
+  // validation error messages before submitting the register form
   submitDetails() {
-    const postData = { ...this.registerForm.value };
-    delete postData.confirmPassword;
+    const { password, confirmPassword, ...userData } = this.registerForm.value;
+
+    // Password validation criteria
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+    if (!password || typeof password !== 'string') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid password. Please enter a valid password.',
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Passwords do not match',
+      });
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail:
+          'Password must be at least 8 characters long and include a combination of upper and lowercase letters and numbers.',
+      });
+      return;
+    }
+
+    // pushing the data
+    const postData = { ...userData, password };
+
     this.authService.registerUser(postData as User).subscribe(
       (response) => {
         console.log(response);

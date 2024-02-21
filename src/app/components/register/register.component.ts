@@ -1,5 +1,10 @@
+import { AuthService } from '../../services/auth.service';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { passwordMatchValidator } from './password-match.directive';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { User } from '../../intefaces/auth';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +23,12 @@ export class RegisterComponent {
     }
   );
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private messageService: MessageService,
+    private router: Router
+  ) {}
 
   get email() {
     return this.registerForm.controls['email'];
@@ -30,5 +40,28 @@ export class RegisterComponent {
 
   get confirmPassword() {
     return this.registerForm.controls['confirmPassword'];
+  }
+
+  submitDetails() {
+    const postData = { ...this.registerForm.value };
+    delete postData.confirmPassword;
+    this.authService.registerUser(postData as User).subscribe(
+      (response) => {
+        console.log(response);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Registered successfully!',
+        });
+        this.router.navigate(['login']);
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Something went wrong',
+        });
+      }
+    );
   }
 }

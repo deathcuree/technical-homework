@@ -1,6 +1,10 @@
 <div class="center-container">
   <div class="centered-div">
-    <form [formGroup]="registerForm" class="custom-card">
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="submitDetails()"
+      class="custom-card"
+    >
       <p-card header="Register">
         <div class="field">
           <label for="email">Email</label>
@@ -46,22 +50,28 @@
           <input
             type="password"
             pInputText
-            formControlName="password"
+            formControlName="confirmPassword"
             class="w-full"
             id="confirmPassword"
             name="confirmPassword"
-            placeholder="Confirm your password"
+            placeholder="Confirm Password"
           />
           <small
             *ngIf="
               confirmPassword.invalid &&
-              (confirmPassword.dirty || password.touched)
+              (confirmPassword.dirty || confirmPassword.touched)
             "
             class="block p-error"
           >
             <div *ngIf="confirmPassword.errors?.['required']">
-              Confirm your password.
+              Confirm the password
             </div>
+          </small>
+          <small
+            class="block p-error"
+            *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid"
+          >
+            Password should match
           </small>
         </div>
         <p-button

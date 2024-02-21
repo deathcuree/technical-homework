@@ -50,48 +50,27 @@ export class RegisterComponent {
     return this.registerForm.controls['confirmPassword'];
   }
 
+  // pushing the data
   submitDetails() {
     const { password, confirmPassword, ...userData } = this.registerForm.value;
 
-    // Check if the email already exists
-    this.authService.checkEmailExists(userData.email ?? '').subscribe(
-      (emailExists) => {
-        if (emailExists) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Email already exists',
-          });
-        } else {
-          // Email does not exist, proceed with registration
-          const postData = { ...userData, password };
+    // pushing the data
+    const postData = { ...userData, password };
 
-          this.authService.registerUser(postData as User).subscribe(
-            (response) => {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Registered successfully!',
-              });
-              this.router.navigate(['login']);
-            },
-            (error) => {
-              console.error('Error registering user:', error);
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Registration failed. Please try again later.',
-              });
-            }
-          );
-        }
+    this.authService.registerUser(postData as User).subscribe(
+      (response) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Registered successfully!',
+        });
+        this.router.navigate(['login']);
       },
       (error) => {
-        console.error('Error checking email existence:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Email already exists.',
+          detail: 'Something went wrong',
         });
       }
     );

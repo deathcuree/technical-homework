@@ -1,8 +1,8 @@
+import { AuthService } from '../../services/auth.service';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +30,7 @@ export class LoginComponent {
     return this.loginForm.controls['password'];
   }
 
+  // checking for errors before submitting the user
   loginUser() {
     const { email, password } = this.loginForm.value;
     this.authService.getUserByEmail(email as string).subscribe(
